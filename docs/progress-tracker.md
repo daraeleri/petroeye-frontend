@@ -4,6 +4,8 @@ Update this file after every meaningful frontend change. System-wide status and 
 
 ## Current State (2026-10-16)
 
+- **Live:** https://petroeye-frontend.vercel.app → API https://petroeye-backend.onrender.com (Swagger at `/docs`). Vercel redeploys on every push to `main`; change `NEXT_PUBLIC_*` in Vercel then **Redeploy** (they're baked in at build time).
+
 - **Rebuilt on the backend v2 API** with a new "ink on paper" design (light + dark), see `docs/ui-context.md`.
 - `npm run build` passes (11 routes). Verified in the browser against a local backend + the 4-truck simulator: login, live WebSocket updates and toasts, overview KPIs/charts, live map with tracks, geofence create → deactivate, truck page (tank gauge, volume chart, route), alerts sheet, dark mode, phone layout.
 
@@ -35,6 +37,5 @@ Update this file after every meaningful frontend change. System-wide status and 
 
 ## Known Issues / Next Up
 
-- Deploy to Vercel and add the Vercel URL to the backend's `CORS_ORIGINS` on Render.
 - Map tiles come from Esri's gray canvas services; review their terms before a commercial launch.
 - No pagination beyond 500–1000 rows per list yet.

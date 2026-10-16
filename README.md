@@ -2,6 +2,8 @@
 
 Next.js dashboard for the PetroEye digital twin of petrol tanker trucks: login, live map with geofences, tank volume, valve state, alerts, discharges and exportable reports. Monochrome "ink on paper" design with light and dark modes (see `docs/ui-context.md`).
 
+**Live:** https://petroeye-frontend.vercel.app
+
 This is one of two repos:
 
 | Repo | Contents | Hosting |
