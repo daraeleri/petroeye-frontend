@@ -1,31 +1,22 @@
 import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "leaflet/dist/leaflet.css";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { DashboardProvider } from "@/lib/DashboardContext";
+import { Providers } from "@/components/providers";
+
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "PetroTwin — Digital Twin Dashboard",
-  description: "Real-time monitoring fleet for petrol tanker trucks",
+  title: { default: "PetroEye", template: "%s · PetroEye" },
+  description: "Digital twin monitoring for petrol tanker trucks",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="w-screen h-screen overflow-hidden">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <DashboardProvider>
-            {children}
-          </DashboardProvider>
-        </ThemeProvider>
+      <body className={`${geistSans.variable} ${geistMono.variable} font-sans`}>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

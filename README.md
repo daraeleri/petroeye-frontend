@@ -1,6 +1,6 @@
-# PetroTwin Frontend
+# PetroEye Frontend
 
-Next.js dashboard for the PetroTwin digital twin of a petrol tanker truck: live map, tank volume, valve state, and alerts.
+Next.js dashboard for the PetroEye digital twin of petrol tanker trucks: login, live map with geofences, tank volume, valve state, alerts, discharges and exportable reports. Monochrome "ink on paper" design with light and dark modes (see `docs/ui-context.md`).
 
 This is one of two repos:
 
@@ -31,7 +31,16 @@ Open http://localhost:3000. You need the backend running (and the simulator publ
 
 ## Deploy (Vercel)
 
-Import this repo in Vercel, keep the Next.js defaults, and set `NEXT_PUBLIC_API_URL` (https) and `NEXT_PUBLIC_WS_URL` (wss) to the Render backend. Add the Vercel URL to the backend's `CORS_ORIGINS`.
+Import this repo in Vercel, keep the Next.js defaults, and set:
+
+| Variable | Value |
+|---|---|
+| `NEXT_PUBLIC_API_URL` | `https://petroeye-backend.onrender.com` |
+| `NEXT_PUBLIC_WS_URL` | `wss://petroeye-backend.onrender.com/ws` |
+
+Then add the Vercel URL (e.g. `https://petroeye.vercel.app`) to the backend's `CORS_ORIGINS` on Render.
+
+Local dev against a backend on another port: put the two variables in `.env.development.local` (gitignored).
 
 ## Docs
 

@@ -4,15 +4,31 @@ Update this file after every meaningful frontend change. System-wide status and 
 
 ## Current State (2026-10-16)
 
-- Split out of the original monorepo into its own repo (hosting target: Vercel).
-- The UI still reads the **v1** telemetry shape (fuel %, temperature, pressure, tilt, flow, hatch), which doesn't match the real truck. It will move to v2 (GPS, tank volume, valve state) once the backend API serves it.
+- **Rebuilt on the backend v2 API** with a new "ink on paper" design (light + dark), see `docs/ui-context.md`.
+- `npm run build` passes (11 routes). Verified in the browser against a local backend + the 4-truck simulator: login, live WebSocket updates and toasts, overview KPIs/charts, live map with tracks, geofence create → deactivate, truck page (tank gauge, volume chart, route), alerts sheet, dark mode, phone layout.
 
-## Known Issues
+## Pages
 
-- Two parallel UI trees: `app/page.tsx` uses `components/dashboard/`; most of `components/hud/` is unused.
-- The Analytics, Energy and Alerts tabs all render the Overview page. The Energy/Analytics views (battery clusters, electricity pricing) are mock data that doesn't apply to this truck.
-- ~~48 MB tanker model~~ — fixed 2026-10-16: simplified + quantized to 3.85 MB (original kept outside the repo in the workspace `.reference/`). Not yet visually checked in the truck detail view.
+| Route | What |
+| ----- | ---- |
+| `/login` | Email + password; ink brand panel |
+| `/` | Overview: KPI cards, live fleet map + fleet list, discharge pixel chart, alerts by type, recent alerts, activity |
+| `/map` | Full-bleed live map; trucks/geofences panel; truck card with 2 h track; draw/edit/deactivate geofences (operator/admin) |
+| `/trucks`, `/trucks/[id]` | Fleet table with filters; truck twin: tank gauge, valve, GPS/device, volume chart, route, discharges, alerts; admin edit + tank calibration |
+| `/alerts` | Filters, critical banner, detail sheet with map pin, explanation, digest and acknowledge |
+| `/discharges` | Sessions with authorized/unauthorized, litres, duration |
+| `/reports` | Date range + truck, summary, activity timeline, CSV/JSON exports |
+| `/users` | Admin: add users, change role, deactivate, reset password |
 
-## Next Up
+## Architecture
 
-- Wait for backend v2 API, then: one UI tree, tank volume + valve + GPS twin, drop the unrelated mock views.
+- `lib/api.ts` typed REST client (bearer token from localStorage; 401 → logout), `lib/queries.ts` TanStack Query hooks, `lib/live.tsx` WebSocket → query cache + toasts, `lib/auth.tsx` session.
+- App Router: `app/(app)/layout.tsx` guards auth and wraps the shell; each page is its own route.
+- Env: `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_WS_URL` (see `.env.example`). Local dev against a non-default backend: `.env.development.local` (gitignored).
+
+## Known Issues / Next Up
+
+- Deploy to Vercel and add the Vercel URL to the backend's `CORS_ORIGINS` on Render.
+- The 3D tanker model (`public/assets/3DModels/fuel_tanker_3d_model.glb`) and `three`/`@react-three/*` are currently unused — decide whether to add a 3D twin card to the truck page or drop them.
+- Map tiles come from Esri's gray canvas services; review their terms before a commercial launch.
+- No pagination beyond 500–1000 rows per list yet.
