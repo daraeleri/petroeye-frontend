@@ -20,6 +20,13 @@ Update this file after every meaningful frontend change. System-wide status and 
 | `/reports` | Date range + truck, summary, activity timeline, CSV/JSON exports |
 | `/users` | Admin: add users, change role, deactivate, reset password |
 
+## 2026-10-16 — 3D twin + dev speed
+
+- **3D twin** panel on the truck page (`components/truck/twin-3d.tsx`), code-split so other pages don't load three.js; the truck page's first-load JS stayed ~269 kB.
+- **Why tab switching felt slow:** in dev, Next compiles each page on first visit (5–48 s on this machine with webpack). Production pre-builds and prefetches: measured 1–210 ms per tab switch including data (9 sidebar clicks, local backend).
+- `npm run dev` now uses **Turbopack** (faster dev compiles). Restart the dev server to pick it up.
+- `next.config.ts` reads `NEXT_DIST_DIR`; `npm run build:check` builds into `.next-build/` so it can't overwrite the `.next/` a running dev server uses (that is what stripped the CSS earlier). Vercel uses the normal `npm run build`.
+
 ## Architecture
 
 - `lib/api.ts` typed REST client (bearer token from localStorage; 401 → logout), `lib/queries.ts` TanStack Query hooks, `lib/live.tsx` WebSocket → query cache + toasts, `lib/auth.tsx` session.
@@ -29,6 +36,5 @@ Update this file after every meaningful frontend change. System-wide status and 
 ## Known Issues / Next Up
 
 - Deploy to Vercel and add the Vercel URL to the backend's `CORS_ORIGINS` on Render.
-- The 3D tanker model (`public/assets/3DModels/fuel_tanker_3d_model.glb`) and `three`/`@react-three/*` are currently unused — decide whether to add a 3D twin card to the truck page or drop them.
 - Map tiles come from Esri's gray canvas services; review their terms before a commercial launch.
 - No pagination beyond 500–1000 rows per list yet.

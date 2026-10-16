@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:check": "node -e \"process.env.NEXT_DIST_DIR='.next-build';require('child_process').execSync('next build',{stdio:'inherit',env:process.env})\""
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.23",

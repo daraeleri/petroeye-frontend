@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 export interface ThemeColors {
   ink: string;
+  ink2: string;
   ink3: string;
   ink4: string;
   critical: string;
@@ -14,6 +15,7 @@ export interface ThemeColors {
 
 const FALLBACK: ThemeColors = {
   ink: "currentColor",
+  ink2: "currentColor",
   ink3: "currentColor",
   ink4: "currentColor",
   critical: "currentColor",
@@ -33,6 +35,7 @@ export function useThemeColors(): ThemeColors {
     const v = (name: string) => css.getPropertyValue(name).trim() || "currentColor";
     setColors({
       ink: v("--ink"),
+      ink2: v("--ink-2"),
       ink3: v("--ink-3"),
       ink4: v("--ink-4"),
       critical: v("--critical"),

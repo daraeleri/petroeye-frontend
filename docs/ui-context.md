@@ -61,6 +61,7 @@ Panel headers use the `label-caps` utility: 11px mono, uppercase, letter-spaced,
 | `Segmented`, `Select`, `Field`, `Textarea`, `Table/Th/Td/Tr` | Controls and quiet tables |
 | `TankGauge` (`components/truck/`) | Side view of the tank with the liquid level and valve — the twin's centrepiece |
 | `VolumeChart` | Volume over time; valve-open periods shaded `critical` |
+| `Twin3D` (`components/truck/twin-3d.tsx`, load via `twin-3d-lazy.tsx`) | 3D tanker on the truck page: model restyled in mid ink (`ink-2`) so it follows the theme, soft contact shadow, slow auto-rotate (off with reduced motion), subtle red pulse while the valve is open, ghosted when offline. Code-split: three.js and the 3.8 MB model load only on the truck page. Live chips (status, valve, fill %, speed) are HTML overlays, not 3D text. |
 | `FleetMap` (`components/map/`) | Leaflet map: ink truck markers (filled + pulse when discharging, red ring when the truck has open alerts, grey when offline, heading arrow when moving), dashed geofence circles, track polyline, click-to-place for drawing geofences |
 
 ## Map tiles

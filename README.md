@@ -25,8 +25,9 @@ Open http://localhost:3000. You need the backend running (and the simulator publ
 
 | Command | What it does |
 | ------- | ------------ |
-| `npm run dev` | Dev server on port 3000 |
-| `npm run build` | Production build (must pass before any change is done) |
+| `npm run dev` | Dev server on port 3000 (Turbopack). Each page compiles on its first visit, so the first click is slow; production is not |
+| `npm run build` | Production build (what Vercel runs). Don't run it while `npm run dev` is running — it rewrites `.next/` |
+| `npm run build:check` | Same build into `.next-build/`, safe to run next to the dev server |
 | `npm run typecheck` | `tsc --noEmit` |
 
 ## Deploy (Vercel)

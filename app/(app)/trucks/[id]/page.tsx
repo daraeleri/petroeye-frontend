@@ -10,6 +10,7 @@ import { EmptyState, Panel, Skeleton } from "@/components/kit/panel";
 import { ActivityPill, Dot, Pill, SeverityPill, ValvePill } from "@/components/kit/status";
 import { FleetMap } from "@/components/map";
 import { TankGauge } from "@/components/truck/tank-gauge";
+import { Twin3D } from "@/components/truck/twin-3d-lazy";
 import { VolumeChart } from "@/components/truck/volume-chart";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -108,10 +109,34 @@ export default function TruckPage() {
         )}
       </div>
 
-      {/* Twin row: tank / valve / GPS / device */}
-      <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-[1.3fr_1fr_1fr]">
+      {/* Twin row: 3D model + tank */}
+      <div className="grid gap-3 xl:grid-cols-[1.5fr_1fr]">
+        <Panel title="Digital twin" subtitle="Drag to rotate · scroll to zoom" bodyClassName="p-0">
+          <div className="relative h-[320px] overflow-hidden rounded-b-xl bg-gradient-to-b from-muted/40 to-transparent md:h-[360px]">
+            <Twin3D activity={t.activity} valveOpen={!!r?.valve_open} className="absolute inset-0" />
+            <div className="pointer-events-none absolute top-3 left-3 flex flex-wrap gap-2">
+              <ActivityPill activity={t.activity} className="bg-card/90 backdrop-blur" />
+              <ValvePill open={r?.valve_open} className={r?.valve_open ? "" : "bg-card/90 backdrop-blur"} />
+            </div>
+            <div className="pointer-events-none absolute right-3 bottom-3 left-3 flex flex-wrap items-end justify-between gap-3">
+              <div className="rounded-lg border bg-card/90 px-3 py-2 backdrop-blur">
+                <p className="label-caps">Tank</p>
+                <p className="tabular font-mono text-lg font-semibold">
+                  {t.fill_pct != null ? `${num(t.fill_pct)}%` : "—"}
+                  <span className="ml-1.5 text-xs font-normal text-muted-foreground">{litres(r?.volume_l)}</span>
+                </p>
+              </div>
+              <div className="rounded-lg border bg-card/90 px-3 py-2 text-right backdrop-blur">
+                <p className="label-caps">Speed</p>
+                <p className="tabular font-mono text-lg font-semibold">
+                  {r?.speed_kmh != null ? num(r.speed_kmh) : "—"}
+                  <span className="ml-1 text-xs font-normal text-muted-foreground">km/h</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </Panel>
         <Panel
-          className="md:col-span-2 2xl:col-span-1"
           title="Tank"
           actions={
             can("admin") && (
@@ -121,7 +146,7 @@ export default function TruckPage() {
             )
           }
         >
-          <div className="grid items-center gap-5 sm:grid-cols-[minmax(0,1fr)_11rem]">
+          <div className="grid items-center gap-5 sm:grid-cols-[minmax(0,1fr)_11rem] xl:grid-cols-1">
             <TankGauge pct={t.fill_pct} valveOpen={r?.valve_open} className="mx-auto max-w-[340px]" />
             <div className="grid gap-3">
               <div>
@@ -143,7 +168,10 @@ export default function TruckPage() {
             </div>
           </div>
         </Panel>
+      </div>
 
+      {/* Valve + GPS/device */}
+      <div className="grid gap-3 md:grid-cols-2">
         <Panel title="Valve">
           <div className="grid h-full content-between gap-4">
             <div>
