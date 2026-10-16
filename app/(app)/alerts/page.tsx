@@ -160,7 +160,13 @@ function explain(a: Alert): { label: string; value: string }[] {
   const t = (a.triggered_by ?? {}) as Record<string, unknown>;
   const rows: { label: string; value: string }[] = [];
   const add = (label: string, v: unknown, suffix = "") => v !== undefined && v !== null && rows.push({ label, value: `${v}${suffix}` });
-  if (a.type === "valve_open_outside_geofence") {
+  if (a.type === "valve_open_denied") {
+    add("What happened", "Someone asked the truck to open the valve; the truck refused, so the valve stayed closed.");
+    add("Why it refused", t.explanation ?? t.reason);
+    add("Nearest geofence", t.nearest_geofence_name);
+    add("Distance to it", t.distance_to_nearest_m, " m");
+    add("Its radius", t.nearest_radius_m, " m");
+  } else if (a.type === "valve_open_outside_geofence") {
     const reason = String(t.reason ?? "");
     add("Why", reason === "no_gps_fix" ? "Valve opened with no GPS fix (location can't be confirmed)" : reason === "left_geofence_with_valve_open" ? "Truck left the geofence with the valve still open" : "Valve opened outside every approved geofence");
     add("Nearest geofence", t.nearest_geofence_name);

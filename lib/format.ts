@@ -47,6 +47,7 @@ export function duration(fromIso: string, toIso: string | null): string {
 
 const ALERT_LABELS: Record<string, string> = {
   valve_open_outside_geofence: "Valve opened outside geofence",
+  valve_open_denied: "Valve open attempt refused",
   volume_drop_valve_closed: "Volume drop, valve closed",
   gps_fix_lost: "GPS fix lost",
   level_sensor_no_echo: "Level sensor no echo",
