@@ -11,7 +11,7 @@ Update this file after every meaningful frontend change. System-wide status and 
 
 - Two parallel UI trees: `app/page.tsx` uses `components/dashboard/`; most of `components/hud/` is unused.
 - The Analytics, Energy and Alerts tabs all render the Overview page. The Energy/Analytics views (battery clusters, electricity pricing) are mock data that doesn't apply to this truck.
-- `public/assets/3DModels/fuel_tanker_3d_model.glb` is 48 MB — compress it (e.g. gltf-transform + Draco) before production.
+- ~~48 MB tanker model~~ — fixed 2026-10-16: simplified + quantized to 3.85 MB (original kept outside the repo in the workspace `.reference/`). Not yet visually checked in the truck detail view.
 
 ## Next Up
 
