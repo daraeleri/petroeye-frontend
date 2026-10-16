@@ -1,14 +1,38 @@
 import { cn } from "@/lib/utils";
 
-/** PetroEye mark: an ink square with an "eye" — a ring and a level line. */
+// The PetroEye mark (public/image/logo/petroeyeLogo.png, trimmed to
+// public/brand/logo-mark.png) is used as a CSS mask, so it is painted with
+// the current text colour and follows light/dark mode automatically.
+const MASK = "url(/brand/logo-mark.png)";
+const RATIO = 1336 / 1105; // width / height of the trimmed artwork
+
+/** The bare eye-and-drop glyph, painted in `currentColor`. Size it by height. */
+export function LogoGlyph({ className }: { className?: string }) {
+  return (
+    <span
+      role="img"
+      aria-label="PetroEye"
+      className={cn("inline-block h-6 shrink-0 bg-current", className)}
+      style={{
+        aspectRatio: RATIO,
+        WebkitMaskImage: MASK,
+        maskImage: MASK,
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+      }}
+    />
+  );
+}
+
+/** App-icon style: ink tile with the glyph in paper colour (matches the favicon). */
 export function LogoMark({ className }: { className?: string }) {
   return (
-    <span className={cn("grid size-8 place-items-center rounded-lg bg-ink text-background", className)}>
-      <svg viewBox="0 0 24 24" className="size-[18px]" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-        <path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
-        <circle cx="12" cy="12" r="3" />
-        <path d="M9 12h6" strokeWidth="1.5" />
-      </svg>
+    <span className={cn("grid size-8 shrink-0 place-items-center rounded-lg bg-ink text-background", className)}>
+      <LogoGlyph className="h-[52%]" />
     </span>
   );
 }

@@ -38,6 +38,18 @@ Rules for colour:
 
 Panel headers use the `label-caps` utility: 11px mono, uppercase, letter-spaced, muted. Truck IDs are always mono.
 
+## Logo
+
+Source artwork: `public/image/logo/petroeyeLogo.png` (eye + fuel drop + signal arcs, black on transparent). Derived files — regenerate them if the artwork changes:
+
+| File | Use |
+| ---- | --- |
+| `public/brand/logo-mark.png` | Trimmed, 320 px. Used as a **CSS mask** by `LogoGlyph` (`components/shell/logo.tsx`), so the glyph is painted in `currentColor` and follows the theme. |
+| `app/icon.png` (512) | Favicon / PWA icon: white glyph on an ink rounded square (readable on light and dark tab bars). |
+| `app/apple-icon.png` (180) | iOS home-screen icon, same design, square (iOS rounds it). |
+
+`LogoMark` is the app-icon tile (ink square + paper glyph; inverts in dark mode) used in the sidebar, mobile login and loading screen. `LogoGlyph` alone sits on the ink login panel. Never recolour the logo with anything but ink/paper.
+
 ## Radius & elevation
 
 `rounded-xl` for panels and floating map panels, `rounded-lg` for inner tiles/buttons, `rounded-md` for inputs, `rounded-full` for pills. Panels are flat with a hairline border; only floating elements (map panels, popovers, toasts) get a shadow.

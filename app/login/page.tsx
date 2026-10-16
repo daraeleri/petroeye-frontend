@@ -4,7 +4,7 @@ import { ArrowRight, Eye, EyeOff, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Field } from "@/components/kit/controls";
-import { Logo } from "@/components/shell/logo";
+import { Logo, LogoGlyph } from "@/components/shell/logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ApiError } from "@/lib/api";
@@ -68,14 +68,9 @@ export default function LoginPage() {
   return (
     <div className="grid min-h-dvh bg-background lg:grid-cols-[1.05fr_1fr]">
       <aside className="relative hidden flex-col justify-between overflow-hidden bg-ink p-10 text-background lg:flex">
-        <div className="flex items-center gap-2.5 text-background">
-          <span className="grid size-8 place-items-center rounded-lg bg-background text-ink">
-            <svg viewBox="0 0 24 24" className="size-[18px]" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-              <path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
-          </span>
-          <span className="text-sm font-semibold tracking-tight">PetroEye</span>
+        <div className="flex items-center gap-3 text-background">
+          <LogoGlyph className="h-8" />
+          <span className="text-base font-semibold tracking-tight">PetroEye</span>
         </div>
         <div className="grid gap-8">
           <PixelField />
